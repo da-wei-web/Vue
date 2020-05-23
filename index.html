@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue</title>
+</head>
+<body>
+    <section id="app">
+        <h1 @click="handleClick">{{ msg }}</h1>
+    </section>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    let vm = new Vue({
+        // 选择器
+        el: "#app",
+        // 数据
+        data: {
+            msg: "haha"
+        },
+        // 方法
+        methods: {
+            handleClick(){
+                console.log(this);
+                this.msg = "哈哈";
+            }
+        }
+    });
+</script>
+</html>
