@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>refs属性</title>
+</head>
+<body>
+    <h1> 获取refs属性 </h1>
+    <section id="app">
+        <h2 ref="title">{{ title }}</h2>
+        <p ref="text" @click="mounted">{{ content }}</p>
+    </section>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            title: "诗",
+            content: "我自狂歌空度日，飞扬跋扈为谁雄"
+        },
+        methods: {
+            mounted() {
+                console.log(this);
+                //dom元素中有多个一样的ref,dom如果不是通过v-for循环出来的,只能获取一个
+                // 如果是循环出来的,可以获取多个,获取的是一个数组
+                console.log(this.$refs.text); // p标签以及内容
+                console.log(this.$refs.title); // h2标签以及内容
+                let oT = this.$refs.text;
+                oT.setAttribute("style", "color:red;")
+            }
+        }
+    });
+</script>
+</html>
