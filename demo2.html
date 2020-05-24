@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue data数据以及数据响应式</title>
+    <style>
+        body, section, ul, li{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .orange-text{
+            color: orange;
+        }
+        .purple-text{
+            color: purple;
+        }
+        .size-font{
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <h1> Vue data数据以及数据响应式 </h1>
+    <section id="app">
+        <ul>
+            <li v-for="item in msg" :class="[color, fontSize]">{{ item }}</li> <!-- 循环语句，item内容别名 -->
+        </ul>
+    </section>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    /*
+        1、数据会直接渲染到页面中，效果容易观察
+        2、数据改变页面自动改变
+
+        为什么会自动改变？
+            1、Vue实例化时,就会向Vue的响应式系统中加入data对象中能够找到的所有属性
+            2、Vue通过监听的方式一直在侦查值是否发生变化
+
+        Object.freeze()  //冻结方法 Vue实例的所有data属性中的数据都失去了响应式
+
+        摘抄：
+            在实例化Vue之前,就已经定义好的对象,已经对象中的数据会被Vue响应式检测
+            数据对象新增的属性因为没有被检测,所以单独改变不会触发Vue响应式
+            但是只要Vue响应式被触发了,新增的属性值也会触发页面的改变
+
+    */ 
+    let data = {
+        msg: ["鸣人", "佐助", "小樱", "卡卡西"],
+        color: "orange-text",
+        fontSize: "size-font"
+    };
+    
+    // Object.freeze(data); // 放到Vue实例化之前
+
+    // 实例化Vue
+    let vm = new Vue({
+        el: "#app",
+        data: data
+    });
+    vm.msg == data.msg // true
+    // 当修改数据时，界面也会改变，vue响应式
+
+    vm.color = "purple-text";
+    data.msg = ["鸣人", "佐助", "小樱", "卡卡西", "佐井"];
+    // 只有data中存在的属性才是响应的。
+    vm.bb = "2"; data.bb = "2";//新添加的属性不会使页面发生变化    
+</script>
+</html>
