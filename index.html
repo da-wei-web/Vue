@@ -5,12 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>vue</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .ball{
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: #f00;
+        }
+        .blue-ball{
+            background-color: #00f;
+        }
+    </style>
 </head>
 <body>
     <section id="app">
         <h1 @click="handleClick">{{ msg }}</h1>
+        <!-- 添加class类名 点击ball修改类名 -->
+        <section :class="ball" @click="modifyColor"></section>
     </section>
 </body>
+<!-- 引入vue -->
 <script src="./js/vue.js"></script>
 <script>
     let vm = new Vue({
@@ -18,13 +36,17 @@
         el: "#app",
         // 数据
         data: {
-            msg: "haha"
+            msg: "haha",
+            ball: "ball"
         },
         // 方法
         methods: {
             handleClick(){
                 console.log(this);
                 this.msg = "哈哈";
+            },
+            modifyColor(){
+                this.ball = "ball blue-ball"
             }
         }
     });
