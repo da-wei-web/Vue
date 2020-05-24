@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>多个实例化验证</title>
+</head>
+<body>
+    <h1> 实例化多个Vue对象 </h1>
+    <section id="app-one">
+        <h2>{{ title }}</h2>
+        <p>{{ greet }}</p>
+    </section>
+    <section id="app-two">
+        <h2>{{ title }}</h2>
+        <p>{{ greet }}</p>
+    
+        <button v-on:click = "changeTitle">点击改变app-one的h2的内容</button>
+    </section>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    /*
+        1、两个实例one和two接管了不同的DOM元素,点击按钮是在two实例接管的DOM元素中,点击时,只会触发two实例中的方法
+        2、one是全局变量，在two实例化中,就可以通过one变量得到第一个Vue实例化对象,通过实例化对象修改one中数据
+    */
+    //  Vue实例
+    var one = new Vue({
+        el: '#app-one',
+        data: {
+            title:" vue-app-one的内容"
+        },
+        computed: {
+            greet: function(){
+                return "Hello App One"
+            }
+        }
+    });
+
+ //  Vue实例
+    var two = new Vue({
+        el: '#app-two',
+        data: {
+            title:" vue-app-two的内容"
+        },
+        methods: {
+            changeTitle: function(){
+                one.title = "app-one的内容发生改变了"
+            }
+        },
+        computed: {
+            greet: function(){
+                return "Hello App two"
+            }
+        }
+    });
+
+</script>
+</html>
