@@ -29,11 +29,21 @@
         <h1 @click="handleClick">{{ msg }}</h1>
         <!-- 添加class类名 点击ball修改类名 -->
         <section :class="[ball, pink]" @click="modifyColor"></section>
+        <button v-on:click = "handleClick">点击改变app2的h1的内容</button>
+    </section>
+    <section id="app2">
+        <h1>{{ msg }}</h1>
+        <button v-on:click = "changeText">点击改变app的h1的内容</button>
     </section>
 </body>
 <!-- 引入vue -->
 <script src="./js/vue.js"></script>
 <script>
+    /*
+        1、多个Vue实例化可以互相改变渲染的数据内容
+        2、不同vue接管的dom，方法不可以相互使用
+            例如：vm中的handleClick方法不能被id为app2的dom元素使用
+    */
     let vm = new Vue({
         // 选择器
         el: "#app",
@@ -48,12 +58,28 @@
             handleClick(){
                 console.log(this);
                 this.msg = "哈哈";
+                vm2.msg = this.msg;
             },
             modifyColor(){
                 this.ball = "ball blue-ball";
                 this.pink = "";
             }
         }
+    });
+
+    let vm2 = new Vue({
+        // 绑定app2选择器
+        el: "#app2",
+        // 数据
+        data: {
+            msg: "呵呵"
+        },
+        methods: {
+            changeText(){
+                vm.msg = this.msg;
+            }
+        }
+
     });
 </script>
 </html>
