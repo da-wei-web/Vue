@@ -19,13 +19,16 @@
         .blue-ball{
             background-color: #00f;
         }
+        .pink-ball{
+            background-color: pink;
+        }
     </style>
 </head>
 <body>
     <section id="app">
         <h1 @click="handleClick">{{ msg }}</h1>
         <!-- 添加class类名 点击ball修改类名 -->
-        <section :class="ball" @click="modifyColor"></section>
+        <section :class="[ball, pink]" @click="modifyColor"></section>
     </section>
 </body>
 <!-- 引入vue -->
@@ -37,7 +40,8 @@
         // 数据
         data: {
             msg: "haha",
-            ball: "ball"
+            ball: "ball",
+            pink: "pink-ball"
         },
         // 方法
         methods: {
@@ -46,7 +50,8 @@
                 this.msg = "哈哈";
             },
             modifyColor(){
-                this.ball = "ball blue-ball"
+                this.ball = "ball blue-ball";
+                this.pink = "";
             }
         }
     });
