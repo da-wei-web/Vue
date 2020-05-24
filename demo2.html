@@ -25,6 +25,7 @@
 <body>
     <h1> Vue data数据以及数据响应式 </h1>
     <section id="app">
+        <!-- <h2>{{ title }}</h2> -->
         <ul>
             <li v-for="item in msg" :class="[color, fontSize]">{{ item }}</li> <!-- 循环语句，item内容别名 -->
         </ul>
@@ -61,12 +62,13 @@
         el: "#app",
         data: data
     });
-    vm.msg == data.msg // true
+    console.log(vm.msg == data.msg) // true
     // 当修改数据时，界面也会改变，vue响应式
 
     vm.color = "purple-text";
     data.msg = ["鸣人", "佐助", "小樱", "卡卡西", "佐井"];
     // 只有data中存在的属性才是响应的。
-    vm.bb = "2"; data.bb = "2";//新添加的属性不会使页面发生变化    
+    vm.bb = "2"; data.bb = "2";//新添加的属性不会使页面发生变化   
+
 </script>
 </html>
