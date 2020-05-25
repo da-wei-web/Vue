@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>methods</title>
+</head>
+<body>
+    <section id="app">
+        {{ status }}
+        {{ statusDoing(status) }}
+    </section>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    const vm = new Vue({
+        el: "#app",
+        data: {
+            status: 1
+        },
+        methods: {
+            // 这里面是用来存放函数,这里面的函数会自动成为vue实例的方法
+            statusDoing(id){
+                let doing = ["睡觉","吃饭","学习Vue"];
+                return doing[id];
+            }
+        }
+    });
+    
+</script>
+</html>
