@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-</title>
+    <style>
+        [v-cloak]{
+            display:none;
+        }
+    </style>
+</head>
+<body>
+    <section id="app1">
+        <!--
+             v-text 指令使用 避免了闪烁 
+             v-text 会把标签中的内容替换,类似于innerText
+             v-text 可以在数据基础上进行运算
+             v-text 可以覆盖旗下所有嵌套的元素内容
+        -->
+        <h1 v-text="msg">{{msg}}</h1>
+        <p v-text="msg"></p>
+        <p v-text="msg + '看我'"></p>
+        <p v-text="'看我'">{{msg}}</p>
+        <p v-text="'看我'">
+            <span>{{msg}}</span>
+        </p>
+    </section>
+    <section id="app2">
+        <h1 v-cloak>{{msg}}</h1>
+    </section>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    // 实例化Vue
+    let vm = new Vue({
+        // 接管id为app1的dom元素
+        el: "#app1",
+        // 数据
+        data: {
+            msg: "v-text指令效果"
+        }
+    });
+    let vmCloak = new Vue({
+        el: "#app2",
+        data: {
+            msg: "v-cloak消除闪烁"
+        }
+    });
+</script>
+</html>
