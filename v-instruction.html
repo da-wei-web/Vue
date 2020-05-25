@@ -28,7 +28,15 @@
         </p>
     </section>
     <section id="app2">
-        <h1 v-cloak>{{msg}}</h1>
+        <!-- v-cloak消除闪烁 -->
+        <h2 v-cloak>{{msg}}</h2>
+
+        <!-- v-html 识别标签-->
+        <h2 v-html="ctn"></h2>
+        <p v-html="ctn">{{ ctn }}</p>
+    </section>
+    <section id="app3">
+        <h1 v-once>{{ msg }}</h1>
     </section>
 </body>
 <script src="./js/vue.js"></script>
@@ -45,8 +53,17 @@
     let vmCloak = new Vue({
         el: "#app2",
         data: {
-            msg: "v-cloak消除闪烁"
+            msg: "v-cloak消除闪烁",
+            ctn: "<span>v-html效果<span>"
         }
     });
+    let vmOnce = new Vue({
+        el: "#app3",
+        data: {
+            msg: "v-once效果"
+        }
+    });
+    vmOnce.msg = "v-once内容不能再改变";
+    vmCloak.msg = "需要在style中自定义属性选择器";
 </script>
 </html>
