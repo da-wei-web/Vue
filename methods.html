@@ -9,7 +9,8 @@
 <body>
     <section id="app">
         {{ status }}
-        {{ statusDoing(status) }}
+        {{ statusDoing(status) }}<br>
+        {{  filterNum() }}
     </section>
 </body>
 <script src="./js/vue.js"></script>
@@ -17,16 +18,24 @@
     const vm = new Vue({
         el: "#app",
         data: {
-            status: 1
+            status: 1,
+            arr: [10, 20, 0, 50, 2, 100, 60]
         },
         methods: {
             // 这里面是用来存放函数,这里面的函数会自动成为vue实例的方法
             statusDoing(id){
                 let doing = ["睡觉","吃饭","学习Vue"];
                 return doing[id];
+            },
+            // 过滤符合条件的数组数据
+            filterNum(){
+                return this.arr.filter((number)=>{
+                    return number < 50;
+                });
             }
         }
     });
-    
+    // 数据的改变会出发数据响应式，进而重新执行Vue中的方法，因此执行filterNum方法会得到新的过滤的值
+    vm.arr = [100, 20, 30, 10, 1, 0, 45];
 </script>
 </html>
