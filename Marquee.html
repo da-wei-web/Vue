@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>跑马灯效果</title>
+    <style>
+        .button{
+            width: 100px;
+            height: 50px;
+            color: #fff;
+            background-color: rgb(8, 102, 224);
+        }
+    </style>
+</head>
+<body>
+    <section id="app">
+        <h1 v-cloak>{{ msg }}</h1>
+        <button @click="runOrStop" :class="btnColor">{{ content }}</button>
+    </section>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            content: "点我开始",
+            msg: "嘿嘿嘿！EveryBody嗨起来！！！",
+            setIntervalId: null,
+            btnColor: "button"
+        },
+        methods:{
+            // 控制跑马灯运行和暂停
+            runOrStop(){
+                /* 
+                    1、判断按钮值来确定跑马灯的状态是运行还是停止
+                    2、按钮初始为点我开始，跑马灯处于停止状态，当点击按钮后，此时this.content中值变为歇一歇，跑马灯运行。
+                    3、点击歇一歇按钮，清除定时器，并阻止程序运行。需要将定时器setIntervalId的值重置为null, this.content要变为点我开始
+                */
+                // this.content === "歇一歇"时将会执行else下的语句
+                if(this.content === "点我开始"){
+                    this.setIntervalId = setInterval(() => {
+                        let start = this.msg.substring(0, 1),
+                            end = this.msg.substring(1);
+                        this.msg = end + start;
+                    }, 200);
+                    
+                    this.content = "歇一歇";
+                }else{
+                    clearInterval(this.setIntervalId);
+                    this.setIntervalId = null;
+                    this.content = "点我开始";
+                    return;
+                }               
+            }
+        }
+    });
+</script>
+</html>
