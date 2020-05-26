@@ -9,6 +9,27 @@
         [v-cloak]{
             display:none;
         }
+
+        body, section, p, ul, li{
+            margin: 0;
+            padding: 0;
+        }
+
+        .className{
+            color: rgb(233, 101, 40);
+            font-size: 24px;
+        }
+
+        .red-text{
+            color: red;
+        }
+        .blue-text{
+            color: blue;
+        }
+        .green-text{
+            color: rgb(19, 228, 19);
+        }
+
     </style>
 </head>
 <body>
@@ -38,6 +59,33 @@
     <section id="app3">
         <h1 v-once>{{ msg }}</h1>
     </section>
+    <section id="app4">
+        <p class="className">hello world</p>
+        <!-- v-bind:指令会将普通属性的值变为表达值 此时className是一个变量，red-text是它的值 -->
+        <p v-bind:class="className">hello world</p>
+        <!-- v-bind简写 动态绑定class和普通class可以混用 显示效果是合并到一起的-->
+        <p :class="className" class="className">war and peace</p>
+        <!-- 
+            <p :class="className red-text">war and peace</p> 
+            绑定多个类名（错误写法）
+        -->
+        <!-- 动态绑定多个类名 -->
+        <p :class="[className, fontColor]">war and peace</p>
+        <!-- 动态class值中写入三目运算符逻辑  动态多个类名切换一般不这样写-->
+        <p :class="isTrue ? className : fontColor">看到我了吗</p>
+        <!-- 
+            动态多个类名切换写法
+            类名中存在-, 需要用引号包裹一下才能使用，否则报错
+        -->
+        <p :class="{'green-text':isTrue, className:!isTrue}">我又回来了</p>
+        <button @click="changeColor">点我试试看</button>
+        <!-- 动态绑定行内样式 -->
+        <section :style="{width:'100px', height:'100px', margin:'10px 0','background-color':'red'}"></section>
+        <!-- 以对象的方式动态绑定行内样式 -->
+        <section :style="styleOrange"></section>
+        <!-- 以数组的方式动态绑定行内样式 -->
+        <section :style="[styleSkyblue, styleOrange]"></section>
+    </section>
 </body>
 <script src="./js/vue.js"></script>
 <script>
@@ -65,5 +113,42 @@
     });
     vmOnce.msg = "v-once内容不能再改变";
     vmCloak.msg = "需要在style中自定义属性选择器";
+
+
+    // Vue指令:v-bind动态属性绑定 
+    /*
+        一个属性的是是固定的,并不会在未来发生改变, 就没有必要动态绑定属性.
+    */ 
+    let vmBind = new Vue({
+        el: "#app4",
+        data: {
+            className: "green-text",
+            fontColor: "red-text",
+            isTrue: true,
+            styleSkyblue: {
+                width: "100px",
+                height: "200px",
+                marginTop: "10px",
+                backgroundColor: "skyblue",
+            },
+            styleOrange: {
+                width: "100px",
+                height: "200px",
+                marginTop: "10px",
+                backgroundColor: "orange",
+            }
+        },
+        methods: {
+            changeColor(){
+                // 当方法被触发，isTrue被赋予相反的值
+                this.isTrue = !this.isTrue;
+            }
+        }
+
+    });
+    // 改变className属性中的值，页面效果会重新渲染
+    vmBind.className = "blue-text";
+
+
 </script>
 </html>
