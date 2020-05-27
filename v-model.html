@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-model数据双向绑定</title>
+</head>
+<body>
+    <!-- 
+        v-model属性的值是一个数据的变量,如果数据的值发生变化,会影响input的值,input的值的变化同时影响数据的变化
+     -->
+    <section id="app">
+        <input v-model="msg" type="text" :style="{width:'100%'}">
+        <p>{{msg}}</p>
+    </section>
+    <!-- 
+        v-model,绑定的是一个字符串,咱们绑定的值,会转成布尔值,
+        选中就是true,不选择就是false
+        有value的checkbox上使用v-model绑定数组，选中取出的是value的值,未选中则为空
+        可以收集多选按钮数据
+    -->
+    <section id="app2">
+        <input type="checkbox" v-model="val" value="哈哈">
+        <input type="checkbox" v-model="val" value="呵呵">
+        <input type="checkbox" v-model="val" value="嘿嘿">
+        {{ val }}
+    </section>
+    <!-- 
+        为了让两个单选按钮拥有互斥功能, 会给单选按钮添加name属性,值相同,表示两个单选按钮属于同一组
+        v-model绑定的是同一个数据，因此去掉name，单选按钮仍互斥
+     -->
+    <section id="app3">
+        <label for="male">
+            <input type="radio" id="male"  value="男" v-model="sex" />男
+        </label>
+        <label for="female">
+            <input type="radio" id="female"  value="女"  v-model="sex"/>女
+        </label>
+    
+        <h2>你选择的性别是:{{ sex }}</h2>
+
+        <select name="fluit" v-model="fluits" multiple>
+            <option value="苹果">苹果</option>
+            <option value="梨子">梨子</option>
+            <option value="香蕉">香蕉</option>
+            <option value="提子">提子</option>
+            <option value="葡萄">葡萄</option>
+        </select>
+    
+        <h2>你选择水果是:{{ fluits }}</h2>
+    </section>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            msg: "工欲善其事必先利其器"
+        }
+    });
+
+    let vmCheckBox = new Vue({
+        el: "#app2",
+        data: {
+            val: "",
+            val: []
+        }
+    });
+
+    /*
+        多选要添加默认选中,也是使用数组罗列,如果不是数组,默认值将无效,可以逻辑多个默认值
+        用来收集数据的属性值不是数组,在选中内容后自动变成数据罗列数据
+    */ 
+    let vmRadio = new Vue({
+        el: "#app3",
+        data: {
+            sex:'男', //设置默认值
+            fluits: [] //多选用数组收集数据
+        }
+    });
+</script>
+</html>
