@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue中methods属性下方法的this指向</title>
+    <style>
+        .ball{
+            width: 200px;
+            height: 200px;
+            line-height: 200px;
+            margin: 200px auto;
+            border-radius: 50%;
+            text-align: center;
+            color: white;
+            font-size: 24px;
+            background-color: red;
+        }
+        #app{
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <section id="app">
+        <section class="ball" @click="handleClick1"></section>
+        <section class="ball" @click="handleClick2"></section>
+        <section class="ball" @click="handleClick3"></section>
+        <section class="ball" @click="handleClick4">{{ msg }}</section>
+    </section>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            msg: "hello world"
+        },
+        methods: {
+            /*
+                methods方法中不推荐使用箭头函数,看实际情况使用
+            */ 
+            // 此为ES6的写法(不过相当于ES5方法的写法，即function(){})
+            handleClick1(e){
+                // this指向Vue实例化对象
+                console.log(this, e);
+            },
+            // ES5的写法
+            handleClick2:function(){
+                // this指向Vue实例化对象
+                console.log(this);
+            },
+            // 箭头函数 
+            handleClick3:()=>{
+                // this指向window
+                console.log(this);
+            },
+
+            handleClick4(){
+                setInterval(() => {
+                    // 箭头函数this指向为Vue实例化对象，因此可以这样用箭头函数
+                    console.log(this);
+                    this.msg = this.msg === "你好"? "hello world":"你好";
+                }, 300);
+            }
+        }
+    });
+</script>
+</html>
