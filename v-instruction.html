@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>v-</title>
+    <title>v指令</title>
     <style>
         [v-cloak]{
             display:none;
@@ -30,6 +30,9 @@
             color: rgb(19, 228, 19);
         }
 
+        .bgc{
+            background-color:rgb(233, 101, 40);
+        }
     </style>
 </head>
 <body>
@@ -85,6 +88,14 @@
         <section :style="styleOrange"></section>
         <!-- 以数组的方式动态绑定行内样式 -->
         <section :style="[styleSkyblue, styleOrange]"></section>
+    </section>
+    <section id="app5">
+        <p class="red-text">{{ count }}</p>
+        <p>{{ msg }}</p>
+        <button v-on:click="handleClick">点我</button>
+        <button v-on:click="limitClick">最小为10</button>
+        <!-- @为v-on指令的简写 -->
+        <button @click="reverseClick">发生逆转吧</button>
     </section>
 </body>
 <script src="./js/vue.js"></script>
@@ -148,5 +159,33 @@
     });
     // 改变className属性中的值，页面效果会重新渲染
     vmBind.className = "blue-text";
+
+    let vmOn = new Vue({
+        el: "#app5",
+        data: {
+            bgcMsg: "bgc",
+            count: 0,
+            msg: "吃葡萄不吐葡萄皮"
+        },
+        methods: {
+            /*
+                在方法中修改数据, 当数据被修改时触发响应系统, 响应系统触发视图重新渲染,
+                methods中方法,不能和data的数据重名，因为data中的数据和methods中的方法都会在Vue初始化时成为Vue示例的属性或方法
+            */ 
+            handleClick(){
+                this.count++;
+            },
+            limitClick(){
+                // 限定this.count的值不能大于10
+                let count =  this.count++;
+                this.count = Math.min(++count, 10);
+            },
+            reverseClick(){
+                // 翻转字符串顺序
+                this.msg = this.msg.split("").reverse().join("");
+            }
+
+        }
+    })
 </script>
 </html>
