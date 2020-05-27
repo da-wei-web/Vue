@@ -15,6 +15,11 @@
     </style>
 </head>
 <body>
+    <!-- 
+        v-model实现数据双向绑定
+        v-model只对表单控件起作用
+        v-model是语法糖，它是v-bind和v-on效果结合的体现
+     -->
     <section id="app">
         <input type="number" v-model="v1">
         <select v-model="option">
@@ -24,7 +29,9 @@
             <option value="/">/</option>
         </select>
         <input type="number" v-model="v2">
+        <!-- =号 -->
         <button type="button" @click="operate">=</button>
+        <!-- 结果 -->
         <input type="number" v-model="result">
     </section>
 </body>
