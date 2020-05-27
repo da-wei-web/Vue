@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue组件化</title>
+</head>
+<body>
+    <section id="app">
+        <section>
+            <!-- 创建一个 todo-item 组件的实例 , 即使用todo-item组件-->
+            <todo-item></todo-item>
+        </section>
+    </section>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    // 定义一个组件，组件名为todo-item，创造
+    Vue.component('todo-item', {
+        template: `
+            <div>
+                <p>大家好,我叫{{name}}</p>
+                <button @click="changeName">点击换名字</button>
+            </div>
+        `,
+        data(){
+            return {
+                name: "王大卫"
+            }
+        },
+        methods: {
+            changeName(){
+                this.name = this.name === "大卫王"? "王大卫":"大卫王";
+            }
+        }
+    });
+    // 实例化Vue对象
+    let vm = new Vue({
+        el: "#app"
+    });
+</script>
+</html>
