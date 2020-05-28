@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>局部组件</title>
+</head>
+<body>
+    <section id="app">
+        <!-- 使用组件用连字符命名 -->
+        <app></app>
+    </section>
+    <!-- 将模板中html分离出来 -->
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    /*
+        在组件中不能使用el，
+        组件中data属性值必须是一个函数,组件的data中直接写对象就会报错
+    */ 
+    
+    // 可以将组件中的data中返回的数据以对象的方式提取出来，所有组件可共享一个data数据对象
+    // 创建组件 用驼峰命名且两个单词的首字母要大写
+    let VHeader = {
+        // el: "", 错误写法
+        template: `
+            <h2>我是头部组件，{{ msg }}</h2>
+        `,
+        data: function(){
+            return {
+                msg: "电脑辐射呢 "
+            }
+        },
+        methods: {
+            changeMsg(){
+                this.msg = "点我进入";
+            }
+        }
+    };
+
+    let App = {
+        template: `<v-header/>`,
+        data: function(){
+            return {
+                entrance: "ok,进入"
+            }
+        },
+        components:{
+            VHeader
+        },
+        methods: {
+            clickE(){
+                this.entrance = "点我进入";
+            }
+        }
+    }
+
+    // 实例化Vue对象
+    let vm = new Vue({
+        el: "#app",
+        // 将组件挂载到实例对象上
+        components: {
+            App
+        }
+    });
+
+</script>
+</html>
