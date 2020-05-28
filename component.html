@@ -13,22 +13,69 @@
             <todo-item></todo-item>
         </section>
     </section>
+    <section id="app2">
+        <section>
+            <!-- 创建一个 todo-item 组件的实例 , 即使用todo-item组件-->
+            <todo-item></todo-item>
+            <my-component></my-component>
+        </section>
+    </section>
+    <section id="app3"></section>
 </body>
 <script src="./js/vue.js"></script>
 <script>
-    // 定义一个组件，组件名为todo-item，创造
-    Vue.component('todo-item', {
+    // 1. 通过组件构造器扩展构造函数
+    let MyComponent= Vue.extend({
+        // 配置对象
+        // 因为组件没有挂在点,所以使用模板,只有一个根节点
+        // 通过template处理需要渲染的DOM
+        // 组件实例必须有一个名字, 通过这个名字在Vue实例中使用, 通过自定定义标签方式使用组件
         template: `
             <div>
                 <p>大家好,我叫{{name}}</p>
                 <button @click="changeName">点击换名字</button>
             </div>
         `,
+        data: function(){
+            return {
+                name:"haha"
+            }
+        },
+        methods:{
+            changeName(){
+                this.name = "哈哈"
+            }
+        }
+    })
+
+    // 2. 通过扩展的构造函数创建Vue实例
+    new MyComponent({
+        el:'#app3'
+    })
+
+
+    /*
+        直接通过选项对象创建组件
+        Vue.component("组件名", "组件构造器")
+        调用Vue.component()注册组件时，组件的注册是全局的，这意味着该组件可以在任意Vue示例下使用。
+        推荐的使用方式是,定义组件使用驼峰方式, 使用组件使用连字符方法.
+    */ 
+    // 定义一个组件，组件名为todo-item，创造
+    Vue.component('todoItem', {
+        // 处理要渲染数据的模板
+        template: `
+            <div>
+                <p>大家好,我叫{{name}}</p>
+                <button @click="changeName">点击换名字</button>
+            </div>
+        `,
+        // 存放数据
         data(){
             return {
                 name: "王大卫"
             }
         },
+        // 存放方法
         methods: {
             changeName(){
                 this.name = this.name === "大卫王"? "王大卫":"大卫王";
@@ -39,5 +86,26 @@
     let vm = new Vue({
         el: "#app"
     });
+
+    let myComponent = {
+        template: `
+            <h1>{{ msg }}</h1>
+        `,
+        data(){
+            return {
+                msg: "aaa，射击"
+            }
+        }
+    }
+
+    let vm2 = new Vue({
+        el: "#app2",
+        components: {
+            "my-component": myComponent
+        }
+    });
+
+
+
 </script>
 </html>
