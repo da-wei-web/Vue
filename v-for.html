@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-for数据循环</title>
+</head>
+<body>
+    <section id="app">
+        <ul>
+            <!-- 
+                key是唯一标识符，数据修改前后，新旧虚拟DOM通过标识符进行对比，标识符一致数据复用不再重新渲染
+                没有设置key，新旧虚拟DOM按顺序进行对比
+             -->
+            <li v-for="item in list" :key="item.id">
+                <span>姓名：{{ item.name }}</span>
+                <span>职业：{{ item.work }}</span>
+                <button @click="changeItem">修改</button>
+            </li>
+        </ul>
+    </section>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    const vm = new Vue({
+        el: "#app",
+        data: {
+            list: [
+                {id: 1, name: "鲁班七号", work: "射手"},
+                {id: 2, name: "宫本武藏", work: "战士"},
+                {id: 3, name: "钟无艳", work: "战士"},
+                {id: 4, name: "狄仁杰", work: "射手"},
+                {id: 5, name: "高渐离", work: "法师"},
+                {id: 6, name: "孙膑", work: "辅助"},
+                {id: 7, name: "黄忠", work: "射手"}
+            ]
+        },
+        methods: {
+            changeItem(){}
+        }
+    });
+</script>
+</html>
