@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模糊查询-过滤数据</title>
+</head>
+<body>
+    <section id="app" v-cloak>
+        <!-- @input实时记录输入框里的内容 -->
+        <input type="text" v-model="message"  @input="inputMsg()">
+        <data-filter :render-list="dataList"></data-filter>
+    </section>
+    <template id="filter">
+        <ul>
+            <li v-for="value in renderList">{{ value }}</li>
+        </ul>
+    </template>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    // 创建局部组件
+    let dataFilter = {
+        template: "#filter",
+        props: ["renderList"]
+    }
+    // 实例化Vue对象
+    const vm = new Vue({
+        el: "#app",
+        data: function(){
+            return {
+                list: ["ajax", "jquery", "bootstrap", "nodejs", "vuejs", "layUI", "mysql"],
+                dataList: ["ajax", "jquery", "bootstrap", "nodejs", "vuejs", "layUI", "mysql"],
+                message: ""
+            }
+        },
+        methods: {
+            inputMsg(){
+                // 过滤原数据得到新数据
+                let newList = this.list.filter(item => item.indexOf(this.message) > -1);
+                // 将新数据赋值给渲染数据列表中
+                this.dataList = newList;
+            }
+        },
+        // 挂载组件
+        components: {
+            dataFilter
+        }
+    });
+</script>
+</html>
