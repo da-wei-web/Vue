@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组件传值和组件传引用</title>
+</head>
+<body>
+    <section id="app">
+        <!-- 向组件中传递数据 :count="3"-->
+        <conter :count="3"></conter>
+        <conter :count="4"></conter>
+    </section>
+    <!-- 组件传引用数据类型 -->
+    <div id="app1">
+        <child1 :aa="obj"></child1>
+        <child2 :bb="obj"></child2>
+    </div>
+
+    <!-- props响应式 -->
+    <div id="app2">
+        <!-- 使用组件 -->
+        <my-component></my-component>
+    </div>
+    
+    <!-- 子组件模板 -->
+    <template id="son">
+        <div>
+            被点击了{{ num }}次
+        </div>
+    </template>
+    
+    <!-- 父组件模板 -->
+    <template id="MyComponent">
+        <div>
+            <my-son  :num="num"></my-son>
+            <!-- 
+                每次点击更改父组件data中的数据, 子组件prop关联的数据也会跟随发生改变
+            -->
+            <button @click="handleClick">点击+1</button>
+        </div>
+    </template>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    // 创造组件
+    let conter = {
+        // 接收数据
+        props: ['count'],
+        template:'<div @click="handleClick">{{count}}</div>',
+        methods:{
+            handleClick(){
+                //  console.log(this.count)
+                this.count++
+            }
+        }
+    }
+    // 实例化Vue对象
+    const vm = new Vue({
+        el: "#app",
+        data: {},
+        methods: {},
+        components: {
+            conter
+        }
+    });
+
+    var child1 = {
+        props:['aa'],
+        template:`<div>{{ aa }}</div>`,
+        mounted(){
+            console.log(this.aa)
+        }
+    }
+    var child2 = {
+        props:['bb'],
+        template:`
+            <div>
+                <div>{{ this.bb }}</div>
+                <button @click="handleClick">点击</button>
+            </div>
+        `,
+        methods: {
+            handleClick(){
+                this.bb.name="haha"
+            }
+        }
+    }
+
+    new Vue({
+        el:'#app1',
+        data: {
+            obj:{
+                name: '哈哈'
+            }
+        },
+        components: {
+            child1,child2
+        }
+    })
+
+
+    
+    // 当父组件数据更新时,传递给子组件的props也会更新
+    // 子组件修改了props的数据, 父组件不会有任何变化(基本数据类型报错,引用类型直接替换引用地址也报错, 但是直接修改属性不报错,但是不建议这么用)
+
+    /*
+        props响应式
+            父组件的数据发生变化, 子组件也会随着发生变化，
+            父组件在使用子组件时,给子组件prop传递的数组无论何时发生改变,
+            在子组件内任何使用该prop的地方都会发生更新
+    */ 
+
+    // 子组件选项
+    let sonComponent = {
+        // 子组件通过props接受数据并使用
+        props:["num"],
+        template:`#son`,
+    }
+
+
+    //  父组件选项对象
+    let MyComponent = {
+        template: `#MyComponent`,
+        data(){
+            return {
+                num: 1
+            }
+        },
+        // 将子组件定义为父组件的局部组件
+        components: {
+            mySon: sonComponent
+        },
+        methods:{
+            handleClick(){
+                this.num++
+            }
+        }
+    }
+
+    //  实例中注册组件
+    const vm2 = new Vue({
+        el:"#app2",
+        components: {
+            MyComponent
+        }
+    });
+</script>
+</html>
