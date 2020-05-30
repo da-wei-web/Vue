@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组件</title>
+</head>
+<body>
+    <section id="app">
+        <p v-show="isTrue">{{ content }}</p>
+        <!-- 向子组件中传递数据和方法 -->
+        <my-component :btn-msg="msg" :handle-click="handleClick"></my-component>
+    </section>
+    <template id="clicli">
+        <button @click="handleClick">{{ btnMsg }}</button>
+    </template>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    // 创建子组件
+    let MyComponent = {
+        template: "#clicli",
+        // 接收数据和方法
+        props: ["btnMsg", "handleClick"]
+    }
+    // 实例化Vue对象
+    const vm = new Vue({
+        el: "#app",
+        data: function(){
+            return {
+                msg: "我是一个按钮",
+                content: "你点了那个按钮，所以我出来了",
+                isTrue: false
+            }
+        },
+        methods: {
+            handleClick(){
+                this.isTrue = true;
+            }
+        },
+        // 挂载组件
+        components: {
+            MyComponent
+        }
+    });
+</script>
+</html>
