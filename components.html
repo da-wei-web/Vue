@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组件的嵌套使用和父传子</title>
+</head>
+<body>
+    <section id="app">
+        <parent-component></parent-component>
+    </section>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    // 组件嵌套和父组件向子组件传值
+    // 创建子组件
+    let ChildComponent = {
+        template: `
+            <p>{{myMsg}}子组件</p>
+        `,
+        // 使用props属性接收来自父组件的数据， myMsg为自定义属性的驼峰写法
+        props: ["myMsg"]
+    }
+    // 创建父组件
+    let ParentComponent = {
+        /*
+            使用子组件时必须将内容包裹在同一个容器盒子中, 否则会报如下错误：     
+            Component template should contain exactly one root element.
+
+            父组件用动态绑定自定义属性传数据给子组件
+            在属性传输数据的时候使用连字符语法 :my-msg="msg"
+        */
+        template: `
+            <section>
+                <h1>{{msg}}父组件</h1>
+                <child-component :my-msg="msg"></child-component>
+            </section>
+        `,
+        components: {
+            ChildComponent
+        },
+        data: function(){
+            return {
+                msg: "我是"
+            }
+        },
+    }
+    // 实例化一个Vue对象
+    const vm = new Vue({
+        el: "#app",
+        data:{},
+        methods: {},
+        components: {
+            ParentComponent
+        }
+    });
+</script>
+</html>
