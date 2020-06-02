@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全选框</title>
+    <style>
+        body,section,ul,li{
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <section id="app">
+        <!-- 使用组件并向组件中传数据 -->
+        <choose v-bind:list="list"></choose>
+    </section>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    /*
+        计算属性：其值是函数的执行结果， computed属性中的值都会挂载在Vue实例化对象身上
+        数据改变，计算属性也会变化，相当于重新计算。
+        计算由两部分组成, get和set 获取值用get，改变值用set
+        计算属性默认没有set，只有输入框能设置set， 通过set函数修改计算属性的值
+    */ 
+    // 创建全局组件
+    Vue.component("Choose", {
+        template: `
+            <section>
+                <section>
+                    <label for="allSelect">全选</label>
+                    <input type="checkbox" v-model="all" id="allSelect"> 
+                </section>
+                <ul>
+                    <li v-for="item in list" :key="item.id">
+                        <input type="checkbox" v-model="item.isChecked">
+                        {{ item.name }}
+                    </li>
+                </ul>
+            </section>
+        `,
+        // 接收数据
+        props: ["list"],
+        // 计算属性
+        computed: {
+            // 以对象的形式需手动配置get函数和set函数 计算属性的值是函数运行的结果
+            all: {
+                get(){
+                    // console.log(this)
+                    // every当内部返回false终止循环 item.isChecked初始值为false，当值变为true，执行every。
+                    return this.list.every((item) => {
+                        // console.log(item)
+                        return item.isChecked;
+                    });
+                },
+                set(isCheckAll){
+                    this.list.forEach(item => {
+                        item.isChecked = isCheckAll;
+                    });
+                }
+            }
+        }
+
+    });
+    // 实例化一个Vue对象
+    const vm = new Vue({
+        el: "#app",
+        data: {
+            list: [
+                {   
+                    id: 1,
+                    name: "html",
+                    isChecked: false
+                },
+                {
+                    id: 2,
+                    name: "css",
+                    isChecked: false
+                },
+                {
+                    id: 3,
+                    name: "javascript",
+                    isChecked: false
+                },
+                {
+                    id: 4,
+                    name: "node.js",
+                    isChecked: false
+                },
+                {
+                    id: 5,
+                    name: "express",
+                    isChecked: false
+                },
+                {
+                    id: 6,
+                    name: "mongodb",
+                    isChecked: false
+                },
+                {
+                    id: 7,
+                    name: "mysql",
+                    isChecked: false
+                },
+                {
+                    id:8,
+                    name: "vue.js",
+                    isChecked: false
+                }
+            ]
+        }
+    });
+</script>
+</html>
