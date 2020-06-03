@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>computed计算属性</title>
+</head>
+<body>
+    <section id="app">
+        <!-- 用计算属性得到全名 仅计算一次-->
+        <h1>{{ fullName }}</h1>
+        <h1>{{ fullName }}</h1>
+        <h1>{{ fullName }}</h1>
+        <h1>{{ fullName }}</h1>
+        <!-- 用methods属性中的方法拼接全名  会调用四次方法-->
+        <h1>{{ getFullName() }}</h1>
+        <h1>{{ getFullName() }}</h1>
+        <h1>{{ getFullName() }}</h1>
+        <h1>{{ getFullName() }}</h1>
+    </section>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    /*
+        特点：
+            计算属性有缓存，第一次计算的结果会缓存下来。
+            之后的只要数据不发生变化，调用多少次计算属性，计算只执行一次，它直接用缓存的值而不会重新计算。
+    */ 
+    const vm = new Vue({
+        el: "#app",
+        data: {
+            firstName: "猪",
+            lastName: "八戒"
+        },
+        methods: {
+            getFullName(){
+                console.log("getFullName"); // 只打印一次
+                return `${this.firstName} ${this.lastName}`;
+            }
+        },
+        // 计算属性实际上保存的是函数运行后的返回值
+        computed: {
+            fullName(){
+                console.log("fullName"); // 只打印一次
+                return `${this.firstName} ${this.lastName}`;
+            }
+        }
+    });
+    console.log(vm); 
+    /*
+        firstName: "猪"
+        fullName: "猪 八戒"
+        lastName: "八戒"
+    */
+</script>
+</html>
