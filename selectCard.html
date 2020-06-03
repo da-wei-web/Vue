@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <title>选项卡</title>
+    <style>
+         body,section,ul,li{
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        ul{
+            display: flex;
+            background-color: #ccc;
+        }
+        li{
+            width: 100px;
+            height: 50px;
+            line-height: 50px;
+            color: #fff;
+            text-align: center;
+            background-color: rgb(21, 150, 255);
+        }
+        li:hover{
+            cursor: pointer;
+        }
+        .active{
+            background-color: rgb(114, 191, 255);
+        }
+    </style>
+</head>
+<body>
+    <section id="app" class="container">
+        <!-- 组件传值 -->
+        <select-card :list="list"></select-card>
+    </section>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    /*
+        需求：
+            1、渲染导航列表
+            2、第一项默认为选中状态
+            3、选中哪个哪个的状态变为被选中状态，原来的选项的选中状态消失
+
+        步骤：
+            1、创建全局组件，在templete模板中写dom结构
+            2、实例化Vue对象，将数据列表通过动态绑定传给组件
+            3、组件通过props属性接收传递过来的数据
+            4、通过v-for指令循环渲染出导航菜单
+            5、通过动态绑定class样式，:class="{'active': value === item.id}，决定是哪个选项处于选中状态
+            6、动过调用methods中的方法，改变value值从而到达切换选项的目的
+    */ 
+    // 创建一个全局组件
+    Vue.component("SelectCard", {
+        template: `
+            <nav>
+                <ul>
+                    <li v-for="item in list" 
+                    @click="handle(item.id)" :key="item.id"
+                     :class="{'active': value === item.id}">{{ item.title }}</li>
+                </ul>
+            </nav>
+        `,
+        // 接收值
+        props: ["list"],
+        data: function(){
+            return {
+                // 默认id为1的选项被选中
+                value: 1
+            }
+        },
+        methods: {
+            // 改变value值
+            handle(id){
+                this.value = id;
+            }
+        }
+    });
+    // 实例化Vue对象
+    const vm = new Vue({
+        el: "#app",
+        data: {
+            list: [
+                {
+                    id: 1,
+                    title: "首页"
+                },
+                {
+                    id: 2,
+                    title: "我的照片"
+                },
+                {
+                    id: 3,
+                    title: "我的文章"
+                },
+                {
+                    id: 4,
+                    title: "我的爱好"
+                },
+                {
+                    id: 5,
+                    title: "我的工作"
+                }
+            ]
+        }
+    });
+</script>
+</html>
