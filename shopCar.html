@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <title>购物车</title>
+    <style>
+        .table{
+            font-size: 16px;
+        }
+        .table > thead > tr > th{
+            text-align: center;
+            vertical-align: middle;
+        }
+        .table > tbody > tr > td{
+            text-align: center;
+            vertical-align: middle;
+        }
+        .table > tbody > tr > th{
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <section id="app">
+        <section class="container">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>书名</th>
+                        <th>出版日期</th>
+                        <th>价格</th>
+                        <th>数量</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody  v-if="list.length">
+                    <tr v-for="(item,index) in list">
+                        <th scope="row">{{ item.id }}</th>
+                        <td>{{ item.bookName }}</td>
+                        <td>{{ item.date }}</td>
+                        <td>{{ item.price | formatPrice }}</td>
+                        <td>
+                            <button class="btn btn-default" @click="decrease(index)"> - </button>
+                            {{ item.count }}
+                            <button class="btn btn-default" @click="increase(index)"> + </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger" @click="remove(index)">移除</button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody v-else>
+                    <tr>
+                        <td colspan="6">
+                            购物车为空
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>总价格：{{ totalPrice | formatPrice }}</h2>
+        </section>
+    </section>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    /*
+        1、完成页面布局
+        2、实例化Vue对象
+        3、通过过滤器filters改变价格的显示样式
+        4、通过方法改变商品数量，给减选按钮添加下限，让它的数量不小于1
+        5、通过splice方法从列表中移除对应的商品
+        6、用计算属性计算商品总价格
+    */ 
+    const vm = new Vue({
+        el: "#app",
+        data: {
+            list: [
+                {
+                    id: 1,
+                    bookName: "紫川",
+                    date: "2008-8",
+                    price: 250.00,
+                    count: 1
+                },
+                {
+                    id: 2,
+                    bookName: "仙逆",
+                    date: "2012-8",
+                    price: 130.00,
+                    count: 1
+                },
+                {
+                    id: 3,
+                    bookName: "遮天",
+                    date: "2014-8",
+                    price: 100.00,
+                    count: 1
+                }
+            ]
+        },
+        // 过滤器
+        filters: {
+            formatPrice(price){
+                return `￥${price.toFixed(2)}`;
+            }
+        },
+        methods: {
+            // 增加数量
+            increase(index){
+                console.log(index)
+                return this.list[index].count++;
+            },
+            // 减少数量
+            decrease(index){
+                return this.list[index].count > 1 ? this.list[index].count-- : 0;
+            },
+            // 移除
+            remove(index){
+                // 通过数组过滤方法删除数据，返回不符合的元素组成的新数组，用新数组替换旧数组，实现数据响应式
+                // return this.list = this.list.filter((item, i)=>{
+                //     return i != index;
+                // });
+                
+                // splice(参数，数量)
+                return this.list.splice(index, 1);
+            }
+        },
+        // 计算属性
+        computed: {
+            // 计算总价
+            totalPrice(){
+                // 总价格
+                let tp = 0;
+                this.list.forEach(item => {
+                    tp += item.price * item.count
+                });
+                return tp;
+            }
+        }
+    });
+</script>
+</html>
