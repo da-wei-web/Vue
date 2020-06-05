@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <title>计数器组件封装</title>
+</head>
+<body>
+    <section id="app">
+        <counter></counter>
+    </section>
+    <template id="ct">
+        <section class="container">
+            <h2>累计：{{ count }} 次</h2>
+            <button class="btn btn-default" @click="decrease">-</button>
+            <button class="btn btn-default" @click="increase">+</button>
+        </section>
+    </template>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    // 创建全局组件Counter
+    Vue.component("Counter", {
+        template: "#ct",
+        data(){
+            return {
+                count: 0
+            }
+        },
+        methods: {
+            // 递减
+            decrease(){
+                this.count > 0 ? this.count-- : 0;
+            },
+            // 累加
+            increase(){
+                this.count++;
+            }
+        }
+    });
+
+    let vm = new Vue({
+        el: "#app"
+    });
+</script>
+</html>
