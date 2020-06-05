@@ -21,7 +21,18 @@
     let MyComponent = {
         template: "#clicli",
         // 接收数据和方法
-        props: ["btnMsg", "handleClick"]
+        // 1、数组接收
+        // props: ["btnMsg", "handleClick"]
+        // 对象接收
+        props: {
+            // 变量名: 限制数据类型(符合要求的才能成功接收)   注意：数据类型应该大写
+            btnMsg: String,
+            handleClick: {
+                type: Function, 
+                required: true // 必须传这个值否则报错
+            }
+        }
+
     }
     // 实例化Vue对象
     const vm = new Vue({
