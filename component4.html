@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>子组件向父组件传值</title>
+</head>
+<body>
+    <section id="app">
+        <parent></parent>
+        <parent></parent>
+        <parent></parent>
+    </section>
+    <template id="parent">
+        <!-- 多个组件实例必须有个根元素 -->
+        <child v-on:item-click="childClick"></child>
+    </template>
+    <template id="child">
+        <ul>
+            <li v-for="item in categories" :key="item.id">
+                <button @click="handleClick(item.id)">{{ item.name }}</button>
+            </li>
+        </ul>
+    </template>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    /*
+        注意1：子组件必须在父组件前声明，也就是说先写子组件再写父组件，否则会出错
+        注意2：this.$emit("item-click", id)中的自定义事件不能用驼峰，需用连字符命名
+    */ 
+    // 子组件(局部组件)
+    let Child = {
+        template: "#child",
+        data(){
+            return {
+                categories: [
+                    {id: 1, name: "首页"},
+                    {id: 2, name: "图片鉴赏"},
+                    {id: 3, name: "学习资源"},
+                    {id: 4, name: "关于我们"},
+                ]
+            }
+        },
+        methods: {
+            handleClick(id){
+                // 发射器 item-click自定义事件
+                this.$emit("item-click", id)
+            }
+        }
+    }
+    // 父组件(局部组件)
+    let Parent = {
+        template: "#parent",
+        // 挂载组件
+        components: {
+            Child
+        },
+        methods: {
+            // 接收子组件传递过来的数据
+            childClick(id){
+                console.log(id)
+            }
+        }
+    }
+    // 实例化Vue对象
+    const vm = new Vue({
+        el: "#app",
+        // 挂载组件
+        components: {
+            Parent
+        }
+    });
+</script>
+</html>
