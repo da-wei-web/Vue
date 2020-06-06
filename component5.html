@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>父组件访问子组件</title>
+</head>
+<body>
+    <section id="app">
+        <child ref="c1"></child>
+        <child ref="c2"></child>
+        <child ref="c3"></child>
+        <button @click="handleClick">获取子组件的方法</button>
+    </section>
+    
+    <template id="child">
+        <h2>{{ msg }}</h2>
+    </template>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    /*
+        $children和$refs访问子组件的里的数据和方法的用法比较
+        
+        $children是数组，通过下标获取对应的子组件
+        $refs默认是个空对象，在使用组件时添加ref="xxx"作为标识，通过这个标识来获取相应的子组件
+
+        当使用的组件数量发生改变时，用$refs可以很好的选中你要选的组件，这种情况用$children不太适合   
+
+    */ 
+    const vm = new Vue({
+        el: "#app",
+        methods: {
+            handleClick(){
+                // // 通过$children访问子组件中的数据和方法
+                // console.log(this.$children instanceof Array); // true
+                // // this.$children是一个数组，获取数据或者方法时应明确下标
+                // // console.log(this.$children[0].msg);
+
+                // // 存在多个子组件
+                // for(let child of this.$children){
+                //     console.log(this.$children)
+                //     console.log(child.msg);
+                // }
+                console.log(this)
+                // 通过$refs访问子组件中的数据和方法
+                console.log(this.$refs.c1.msg); // {c1: VueComponent, c2: VueComponent, c3: VueComponent}
+                this.$refs.c1.msg = "你已经被我改变了"
+                console.log(this.$refs.c1.msg);
+            }
+        },
+        components: {
+            child: {
+                template: "#child",
+                data(){
+                    return {
+                        msg: "我是子组件"
+                    }
+                }
+            }
+        }
+    });
+</script>
+</html>
