@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>插槽</title>
+</head>
+<body>
+    <!-- 具名插槽，新版最新指令v-slot -->
+    <section id="app">
+        <h1>哈哈</h1>
+        <child>
+            <button>按钮</button>
+            <span>点我没用</span>
+        </child>
+        <child>
+            <span>我没有按钮</span>
+        </child>
+        <!-- 当没有插入的值时，会显示插槽中的默认值 -->
+        <child></child>
+        <!-- 具名插槽v-slot命令的使用  包裹在template模板中的dom结构将是插入插槽里的内容，没有被包裹在带有v-slot的<template>中的内容都会被视为默认插槽的内容 -->
+        <child>
+            <template v-slot:danger>
+                <h2>我是具名插槽</h2>
+            </template>
+        </child>
+    </section>
+
+    <template id="child">
+        <section>
+            <h2>{{ msg }}</h2>
+            <!-- 使用组件时包裹的内容会放到一个插槽中 -->
+            <slot></slot>
+            <!-- 第二个插槽会再次将内容全部包裹 -->
+            <slot><button>默认按钮</button></slot>
+            <!-- 具名插槽 -->
+            <slot name="danger"></slot>
+        </section>
+    </template>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    const vm = new Vue({
+        el: "#app",
+        components: {
+            child: {
+                template: "#child",
+                data(){
+                    return {
+                        msg: "我是一个组件"
+                    }
+                }
+            }
+        }
+    });
+</script>
+</html>
