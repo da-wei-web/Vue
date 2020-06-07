@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <title>简易留言</title>
+    <style>
+        /* 防闪烁 */
+        [v-cloak]{
+            display: none;
+        }
+        .input-content{
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <section id="app" class="col-md-4">
+        <h2 v-cloak>{{ h2Content }}</h2>
+        <parent>
+            <!-- <template v-slot:btn>
+                <button class="btn btn-primary">提交</button>
+            </template> -->
+        </parent>
+    </section>
+
+    <template id="input">
+        <div>
+            <input class="form-control" type="text" v-model.lazy="msg" @keyup.enter="submit">
+        </div>
+    </template>
+    <template id="show">
+        <ol>
+            <li v-for="(ct, index) in contents" :key="index">
+                <span>{{ ct }}</span>
+                <button @click="deleteBtn(index)" class="btn btn-danger">X</button>
+            </li>
+        </ol>
+    </template>
+    <template id="parent">
+        <div>
+            <div class="input-content">
+                <input-content :content="comments" @write="writeContent"></input-content>
+                <slot name="btn"></slot>
+            </div>
+            <show-content :contents="comments" @delete="deleteContent"></show-content>
+        </div>
+    </template>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    let InputContent = {
+        template: "#input",
+        data(){
+            return {
+                msg: ""
+            }
+        },
+        methods: {
+            submit(){
+                // 去空格
+                this.msg = this.msg.trim();
+                // 如果内容为空提示输入内容并阻止向下运行
+                if(!this.msg){
+                    alert("请输入正确的内容");
+                    return;
+                }
+                // 通过自定义事件write向父组件发送数据
+                this.$emit("write", this.msg);
+                // 按下回车键后，清空输入框里的内容
+                this.msg = "";
+            }
+        }
+    }
+
+    let ShowContent = {
+        template: "#show",
+        props: ["contents"],
+        methods: {
+            deleteBtn(index){
+                this.$emit("delete", index);
+            }
+        }
+    }
+
+    let Parent = {
+        template: "#parent",
+        data(){
+            return {
+                comments: [],
+                h2Content: "留言"
+            }
+        },
+        // 挂载组件
+        components: {
+            InputContent,
+            ShowContent
+        },
+        methods: {
+            writeContent(value){
+                this.comments.push(value);
+            },
+            deleteContent(index){
+                this.comments.splice(index, 1);
+            }
+        }
+    }
+
+    const vm = new Vue({
+        el: "#app",
+        data: {
+            h2Content: "留言"
+        },
+        // 挂载组件
+        components: {
+            Parent
+        }
+    });
+</script>
+</html>
