@@ -11,3 +11,6 @@ import { Music } from "./computed";
 
 let sing = new Music("dhsdah");
 console.log(sing.mc = "萨达哈");
+
+// 引入css模块
+require("../src/css/header.css");
