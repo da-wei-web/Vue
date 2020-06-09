@@ -60,84 +60,11 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-// const { subtraction, add } = require("./computed"); 
-/*
-    Cannot redeclare block-scoped variable 'subtraction'.
-    1 const { subtraction } = require("./computed");
-*/
-// const computed = require("./computed");
-Object.defineProperty(exports, "__esModule", { value: true });
-// console.log(computed.add(1, 2));
-const computed_1 = __webpack_require__(1);
-let sing = new computed_1.Music("dhsdah");
-console.log(sing.mc = "萨达哈");
-// 引入css模块
-__webpack_require__(2);
-
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-// function add(x:number, y:number):number{
-//     return x + y;
-// }
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Music = void 0;
-// function subtraction(x:number, y:number):number{
-//     return x - y;
-// }
-// module.exports = {
-//     add, subtraction
-// }
-class Music {
-    constructor(mc) {
-        this.mc = mc;
-    }
-    change(music) {
-        console.log(music);
-    }
-}
-exports.Music = Music;
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var api = __webpack_require__(3);
-            var content = __webpack_require__(4);
-
-            content = content.__esModule ? content.default : content;
-
-            if (typeof content === 'string') {
-              content = [[module.i, content, '']];
-            }
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = api(content, options);
-
-
-
-module.exports = content.locals || {};
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -412,20 +339,7 @@ module.exports = function (list, options) {
 };
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(5);
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, "body{\r\n    background-color: rgb(255, 128, 128);\r\n}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-/* 5 */
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -523,6 +437,131 @@ function toComment(sourceMap) {
   var data = "sourceMappingURL=data:application/json;charset=utf-8;base64,".concat(base64);
   return "/*# ".concat(data, " */");
 }
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+// const { subtraction, add } = require("./computed"); 
+/*
+    Cannot redeclare block-scoped variable 'subtraction'.
+    1 const { subtraction } = require("./computed");
+*/
+// const computed = require("./computed");
+Object.defineProperty(exports, "__esModule", { value: true });
+// console.log(computed.add(1, 2));
+const computed_1 = __webpack_require__(3);
+let sing = new computed_1.Music("dhsdah");
+console.log(sing.mc = "萨达哈");
+// 引入css模块
+__webpack_require__(4);
+// 引入less模块
+__webpack_require__(6);
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+// function add(x:number, y:number):number{
+//     return x + y;
+// }
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Music = void 0;
+// function subtraction(x:number, y:number):number{
+//     return x - y;
+// }
+// module.exports = {
+//     add, subtraction
+// }
+class Music {
+    constructor(mc) {
+        this.mc = mc;
+    }
+    change(music) {
+        console.log(music);
+    }
+}
+exports.Music = Music;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var api = __webpack_require__(0);
+            var content = __webpack_require__(5);
+
+            content = content.__esModule ? content.default : content;
+
+            if (typeof content === 'string') {
+              content = [[module.i, content, '']];
+            }
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = api(content, options);
+
+
+
+module.exports = content.locals || {};
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(1);
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, "body{\r\n    background-color: rgb(255, 128, 128);\r\n}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var api = __webpack_require__(0);
+            var content = __webpack_require__(7);
+
+            content = content.__esModule ? content.default : content;
+
+            if (typeof content === 'string') {
+              content = [[module.i, content, '']];
+            }
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = api(content, options);
+
+
+
+module.exports = content.locals || {};
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(1);
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".footer {\n  width: 768px;\n  height: 200px;\n  margin: 0 auto;\n}\n.footer > p {\n  font-size: 24px;\n  color: #fff;\n}\n.footer > p > span {\n  color: #fff;\n}\n", ""]);
+// Exports
+module.exports = exports;
+
 
 /***/ })
 /******/ ]);

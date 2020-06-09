@@ -12,3 +12,5 @@ let sing = new computed_1.Music("dhsdah");
 console.log(sing.mc = "萨达哈");
 // 引入css模块
 require("../src/css/header.css");
+// 引入less模块
+require("../src/css/footer.less");
