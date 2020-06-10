@@ -8,6 +8,12 @@ module.exports = {
         // 当图片的大小超过limit设定的值时，会用到file-loader模块，它会将图片直接打成包
         publicPath: "dist/"
     },
+    resolve: {
+        // alias 别名
+        alias: {
+            "vue$": "vue/dist/vue.esm.js"
+        }
+    },
     module: {
         rules: [
             {
