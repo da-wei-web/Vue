@@ -14,3 +14,13 @@ console.log(sing.mc = "萨达哈");
 require("../src/css/header.css");
 // 引入less模块
 require("../src/css/footer.less");
+
+// 引入vue
+import Vue from "vue";
+
+let vm = new Vue({
+    el: "#app",
+    data: {
+        msg: "我是Vue"
+    }
+});
