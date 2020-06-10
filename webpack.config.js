@@ -37,6 +37,17 @@ module.exports = {
                         
                     }
                 ]
+            },
+            {
+                // 将es6语法打包成es5语法
+                test: /\.js$/,
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['es2015']
+                    }
+                }
             }
         ]
     }
