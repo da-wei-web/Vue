@@ -450,16 +450,16 @@ function toComment(sourceMap) {
     1 const { subtraction } = require("./computed");
 */
 // const computed = require("./computed");
+
 Object.defineProperty(exports, "__esModule", { value: true });
 // console.log(computed.add(1, 2));
-const computed_1 = __webpack_require__(3);
-let sing = new computed_1.Music("dhsdah");
+var computed_1 = __webpack_require__(3);
+var sing = new computed_1.Music("dhsdah");
 console.log(sing.mc = "萨达哈");
 // 引入css模块
 __webpack_require__(4);
 // 引入less模块
 __webpack_require__(8);
-
 
 /***/ }),
 /* 3 */
@@ -470,6 +470,11 @@ __webpack_require__(8);
 // function add(x:number, y:number):number{
 //     return x + y;
 // }
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Music = void 0;
 // function subtraction(x:number, y:number):number{
@@ -478,16 +483,25 @@ exports.Music = void 0;
 // module.exports = {
 //     add, subtraction
 // }
-class Music {
-    constructor(mc) {
+
+var Music = function () {
+    function Music(mc) {
+        _classCallCheck(this, Music);
+
         this.mc = mc;
     }
-    change(music) {
-        console.log(music);
-    }
-}
-exports.Music = Music;
 
+    _createClass(Music, [{
+        key: "change",
+        value: function change(music) {
+            console.log(music);
+        }
+    }]);
+
+    return Music;
+}();
+
+exports.Music = Music;
 
 /***/ }),
 /* 4 */
