@@ -31,8 +31,10 @@ module.exports = {
                         loader: 'url-loader',
                         options: {
                             // 图片大小小于limit值时，图片被打包成base64字符串
-                            limit: 23000
-                        }
+                            limit: 23000,
+                            name: "img/[name].[hash:8].[ext]"
+                        },
+                        
                     }
                 ]
             }
