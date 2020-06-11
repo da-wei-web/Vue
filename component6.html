@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动态组件</title>
+    <style>
+        body, section, ul, li, h2{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        #app{
+            width: 100vw;
+            height: 100vh;
+            background-color: rgb(68, 202, 255);
+        }
+        h2{
+            color: #fff;
+            font-size: 50px;
+            text-align: center;
+        }
+        .container{
+            position: fixed;;
+            bottom: 0;
+        }
+
+        .container > ul{
+            display: flex;
+            justify-content: space-between;
+            width: 100vw;
+        }
+        .container > ul > li{
+            flex: 1;
+            height: 45px;
+            text-align: center;
+            background: rgb(246, 245, 245);
+        }
+        .container > ul > li > button{
+            display: block;
+            width: 100%;
+            height: 100%;
+            border:0;
+            outline:none;
+            font-size: 18px;
+        }
+
+        .active{
+            background-color: #fff;
+        }
+
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <section id="app" v-cloak>
+        <!-- 
+            v-if切换组件：
+            <home v-if="cur === 'Home'"></home>
+            <artical v-else-if="cur === 'Artical'"></artical>
+            <about v-else="cur === 'About'"></about> 
+        -->
+        <!--动态组件基本用法 动态绑定is 可以在同一个挂载点动态切换多个组件 -->
+        <!-- 保留组件状态 相当于在创建新组件时不会销毁旧组件 有的场景使用keep-alive可以减少性能的消耗 -->
+        <keep-alive>
+            <component :is="cur"></component>
+        </keep-alive>
+        <section class="container">
+            <ul>
+                <li v-for="(value,index) in btns" 
+                    :key="index"
+                    @click="handleClick(value)">
+                    <button :class="{active:cur==value}">{{ value }}</button>
+                </li>
+            </ul>
+        </section>
+    </section>
+
+    <template id="home">
+        <section>
+            <h2>主页</h2>
+            内容：<input type="text">
+        </section>
+    </template>
+    <template id="artical">
+        <h2>文章</h2>
+    </template>
+    <template id="about">
+        <h2>关于我们</h2>
+    </template>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    /*
+        组件切换实质是频繁地创建新组件和删除旧组件
+        在切换组件过程中经历了，新组件的初始化完成--旧组件的销毁--新组件渲染到页面中
+    */ 
+    let Home = {
+        template: "#home",
+        data(){
+            return {
+                msg: "Home"
+            }
+        },
+        created(){
+            alert("Home组件实例化完毕")
+        },
+        beforeDestroy(){
+            alert("Home组件将被删除")
+        }
+
+    }
+    let Artical = {
+        template: "#artical",
+        data(){
+            return {
+                msg: "Artical"
+            }
+        },
+        created(){
+            alert("Artical组件实例化完毕")
+        },
+        beforeDestroy(){
+            alert("Artical组件将被删除")
+        }
+    }
+    let About = {
+        template: "#about",
+        data(){
+            return {
+                msg: "About"
+            }
+        },
+        // 生命周期，钩子函数
+        created(){
+            alert("About组件实例化完毕")
+        },
+        beforeDestroy(){
+            alert("About组件将被删除")
+        }
+    }
+
+
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            btns: ["Home", "Artical", "About"],
+            cur: "Home"
+        },
+        methods: {
+            handleClick(value){
+                this.cur = value;
+            }
+        },
+        components: {
+            Home, Artical, About
+        }
+    });
+
+</script>
+</html>
