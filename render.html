@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue中render函数</title>
+</head>
+<body>
+    <div id="app">
+        <anchored-heading :level="level">
+            Hello world!
+            <button @click="changeLevel">点我{{level}}</button>
+        </anchored-heading>
+    </div>
+    <!-- <template id="anchored-heading-template">
+        <h1 v-if="level === 1">
+            <span>我是{{level}}插槽</span>
+            <slot></slot>
+        </h1>
+        <h2 v-else-if="level === 2">
+            <span>我是{{level}}插槽</span>
+            <slot></slot>
+        </h2>
+        <h3 v-else-if="level === 3">
+            <span>我是{{level}}插槽</span>
+            <slot></slot>
+        </h3>
+        <h4 v-else-if="level === 4">
+            <span>我是{{level}}插槽</span>
+            <slot></slot>
+        </h4>
+        <h5 v-else-if="level === 5">
+            <span>我是{{level}}插槽</span>
+            <slot></slot>
+        </h5>
+        <h6 v-else-if="level === 6">
+            <span>我是{{level}}插槽</span>
+            <slot></slot>
+        </h6>
+    </template> -->
+    <div id="app2">
+        <my-component></my-component>
+    </div>
+</body>
+
+<script src="./js/vue.js"></script>
+<script>
+    Vue.component('anchored-heading', {
+        /*
+            render函数, 返回一个虚拟DOM。
+            createElement创建虚拟DOM,它的第一个参数可以是字符串、对象(组件对象)、函数
+            第一个参数为字符串时，相当于定义标签
+        */
+        render: function (createElement) {
+            console.log(this.$slots.default)
+            return createElement(
+                'h' + this.level,   // 标签名称
+                this.$slots.default // 子节点数组
+            )
+        },
+        // template: '#anchored-heading-template',
+        props: ["level"],
+        watch: {
+            level(newVal, oldVal){
+                console.log("newVal:", newVal)
+                console.log("oldVal:", oldVal)
+            }
+        }
+    });
+    let vm = new Vue({
+        el: "#app",
+        data(){
+            return {
+                level: 1,
+                num: 2
+            }
+           
+        },
+        methods:{
+            changeLevel(){
+                this.level = 0;
+                this.level = Math.min(this.num++, 6);
+                console.log(this.level);
+            }
+        }
+    });
+    console.log(vm);
+
+    let MyComponent = {
+        template:"<h2>我是MyComponent组件的内容</h2>"
+    }
+
+    const vm2 = new Vue({
+        el:"#app2",
+        render(createElement){
+            // createElement的第一个参数
+            // 参数为字符串
+            // return createElement("h2", {
+            //     class: {
+            //         text: true
+            //     }
+            // }, "我是h2标签");
+
+            // 参数为组件对象
+            // return createElement(MyComponent);
+            // 参数为函数
+            // function Fn(){
+            //     return MyComponent;
+            // }
+            // return createElement(Fn());
+
+            // createElement的第二个参数 未来创建标签的属性， 
+            // return createElement("h2", {
+            //     class: {
+            //         text: true // 标签有一个class类样式
+            //     },
+            //     style: {
+            //         active: false // 没有为active的行内样式
+            //     },
+            //     attrs: {
+            //         id: 1
+            //     },
+            //     // 绑定事件
+            //     on: {
+            //         click: function (){
+            //             console.log("hello");
+            //         }
+            //     }
+            // }, "我是h2标签");
+            
+            // 第三个参数就是虚拟DOM所包含的参数, 可以是字符串，也可以是数组
+            // return createElement("h2", {
+            //     style: {
+            //         color: "orange" 
+            //     },
+               
+            // }, [
+            //     // 数组里可以创建多个虚拟DOM，用法同上
+            //     createElement("span", {
+            //         style:{
+            //             color: "skyblue"
+            //         }
+            //     },"hello"),
+            //     " world"
+            // ]);
+
+            return createElement("ul", {
+                style: {
+                    listStyle: "none"
+                },
+               
+            }, 
+            // map映射，循环创建多个虚拟dom， 虚拟dom都有着唯一的节点
+            Array.apply(null, {length: 3}).map(()=>{
+                return createElement("li",{
+                    style: {
+                        color: "orange",
+                        fontSize: "50px"
+                    }
+                }, "hello");
+            }));
+        }
+        
+    });
+
+ 
+
+</script>
+</html>
