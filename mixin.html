@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue中混沌对象mixin的使用</title>
+</head>
+<body>
+    <div id="app">
+        <my-component></my-component>
+    </div>
+
+    <template id="mycomponent">
+        <div>
+            <button @click="handleClick">{{ msg }}</button>
+        </div>
+    </template>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    /*
+        Vue自动将混入对象里的内容混入到组件中
+        混入对象可以引用几乎任何Vue组件所能引用的东西，比如数据、方法、属性等
+        混入对象与组件中重名的数据、方法、属性会被组件中的内容覆盖掉
+        组件被创建时,mixin中的钩子函数和组件中的同名钩子函数都会执行，优先执行混入对象中的钩子函数
+    */ 
+    let mixin = {
+        data(){
+            return {
+                msg: "我是混入对象"
+            }
+        },
+        methods:{
+            handleClick(){
+                alert(this.msg);
+            }
+        },
+        // 钩子函数
+        created(){
+            console.log("混入中的created");
+        }
+    }
+    let MyComponent = {
+        mixins: [mixin],
+        template: "#mycomponent",
+        data(){
+            return {
+                msg: "我是组件的信息"
+            }
+        },
+        // 钩子函数
+        created(){
+            console.log("组件中的created");
+        }
+       
+    }
+
+    const vm = new Vue({
+        el: "#app",
+        data:{},
+        components: {
+            MyComponent
+        }
+    });
+</script>
+</html>
