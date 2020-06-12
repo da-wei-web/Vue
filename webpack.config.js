@@ -1,7 +1,7 @@
 const path = require("path");
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
     entry: "./webpack1/src/main.js",
@@ -71,9 +71,16 @@ module.exports = {
     plugins: [
         // make sure to include the plugin for the magic
         new VueLoaderPlugin(),
+        // 打包html插件
         new HtmlWebpackPlugin({
             template: "webpack1/index.html"
         }),
-        new UglifyJsPlugin()
-    ]
+        // 丑化插件 开发时用不到
+        // new UglifyJsPlugin()
+    ],
+    // 配置webpack-dev-server，本地服务器，默认端口8080
+    devServer: {
+        contentBase: "./webpack1/dist",
+        inline: true
+    }
 }
