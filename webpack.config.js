@@ -1,5 +1,6 @@
 const path = require("path");
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
     entry: "./webpack1/src/main.js",
@@ -7,7 +8,7 @@ module.exports = {
         path: path.resolve(__dirname, "webpack1/dist"),
         filename: "bundle.js",
         // 当图片的大小超过limit设定的值时，会用到file-loader模块，它会将图片直接打成包
-        publicPath: "dist/"
+        // publicPath: "dist/"
     },
     resolve: {
         // alias 别名
@@ -68,6 +69,9 @@ module.exports = {
     },
     plugins: [
         // make sure to include the plugin for the magic
-        new VueLoaderPlugin()
+        new VueLoaderPlugin(),
+        new HtmlWebpackPlugin({
+            template: "webpack1/index.html"
+        })
     ]
 }
