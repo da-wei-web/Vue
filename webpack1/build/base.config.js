@@ -1,12 +1,11 @@
 const path = require("path");
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
     entry: "./webpack1/src/main.js",
     output: {
-        path: path.resolve(__dirname, "webpack1/dist"),
+        path: path.resolve(__dirname, "../dist"),
         filename: "bundle.js",
         // 当图片的大小超过limit设定的值时，会用到file-loader模块，它会将图片直接打成包
         // publicPath: "dist/"
@@ -75,12 +74,5 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: "webpack1/index.html"
         }),
-        // 丑化插件 开发时用不到
-        // new UglifyJsPlugin()
-    ],
-    // 配置webpack-dev-server，本地服务器，默认端口8080
-    devServer: {
-        contentBase: "./webpack1/dist",
-        inline: true
-    }
+    ]
 }
