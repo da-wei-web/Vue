@@ -1,4 +1,5 @@
 const path = require("path");
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
     entry: "./webpack1/src/main.js",
@@ -16,10 +17,12 @@ module.exports = {
     },
     module: {
         rules: [
+            // 打包CSS样式
             {
                 test: /\.css$/,
                 use: [ 'style-loader', 'css-loader' ]
             },
+            // 打包less
             {
                 test: /\.less$/,
                 use: [{
@@ -30,6 +33,7 @@ module.exports = {
                     loader: "less-loader" // compiles Less to CSS
                 }]
             },
+            // 打包图片资源
             {
                 test: /\.(png|jpg|gif)$/,
                 use: [
@@ -44,8 +48,8 @@ module.exports = {
                     }
                 ]
             },
+            // 将es6语法打包成es5语法
             {
-                // 将es6语法打包成es5语法
                 test: /\.js$/,
                 exclude: /(node_modules|bower_components)/,
                 use: {
@@ -54,7 +58,16 @@ module.exports = {
                         presets: ['es2015']
                     }
                 }
+            },
+            // 打包vue组件文件
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader'
             }
         ]
-    }
+    },
+    plugins: [
+        // make sure to include the plugin for the magic
+        new VueLoaderPlugin()
+    ]
 }
